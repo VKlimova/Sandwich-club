@@ -40,11 +40,11 @@ public class JsonUtils {
 
 
     //Sandwich(String mainName, List<String> alsoKnownAs, String placeOfOrigin, String description, String image, List<String> ingredients)
-        Sandwich thisSandwich = new Sandwich( jsonNameObj.getString("mainName"),
+        Sandwich thisSandwich = new Sandwich( jsonNameObj.optString("mainName"),
                 aka ,
-                jsonObj.getString("placeOfOrigin"),
-                jsonObj.getString("description"),
-                jsonObj.getString("image"),
+                jsonObj.optString("placeOfOrigin"),
+                jsonObj.optString("description"),
+                jsonObj.optString("image"),
                 ingredients);
 
         return thisSandwich;

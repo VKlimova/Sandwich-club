@@ -13,15 +13,24 @@ import com.squareup.picasso.Picasso;
 import com.udacity.sandwichclub.model.Sandwich;
 import com.udacity.sandwichclub.utils.JsonUtils;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_POSITION = "extra_position";
     private static final int DEFAULT_POSITION = -1;
 
+
     @Override
+    /**
+     * onCreate the data for the selected sandwich from R.array.sandwich_details goes to JSON string
+     * and then is populated to TextViews.
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        ButterKnife.bind(this);
 
         ImageView ingredientsIv = findViewById(R.id.image_iv);
 
@@ -60,15 +69,37 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
+    /**
+     *
+     * Show the Toast with error and close
+     */
     private void closeOnError() {
         finish();
         Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
     }
 
-    private void populateUI(Sandwich sandwich) {
+    /**
+     * Accept sandwich object and populate to TextViews
+     *
+     */
 
-        TextView originTv = findViewById(R.id.origin_tv);
-        TextView originLbl = findViewById(R.id.originLbl);
+
+    @BindView(R.id.origin_tv)
+    TextView originTv;
+    @BindView(R.id.originLbl)
+    TextView originLbl;
+    @BindView(R.id.also_known_tv)
+    TextView akaTv;
+    @BindView(R.id.akaLbl)
+    TextView akaLbl;
+    @BindView(R.id.ingredients_tv)
+    TextView ingrTv;
+    @BindView(R.id.description_tv)
+    TextView descrTv;
+
+    private void populateUI(Sandwich sandwich) {
+  //      TextView originTv = findViewById(R.id.origin_tv);
+  //      TextView originLbl = findViewById(R.id.originLbl);
 
         originTv.setText(sandwich.getPlaceOfOrigin()+"\n");
         if (originTv.length()<=1)
@@ -78,9 +109,8 @@ public class DetailActivity extends AppCompatActivity {
 
         }
 
-
-        TextView akaTv = findViewById(R.id.also_known_tv);
-        TextView akaLbl = findViewById(R.id.akaLbl);
+//        TextView akaTv = findViewById(R.id.also_known_tv);
+//        TextView akaLbl = findViewById(R.id.akaLbl);
         for (String aka : sandwich.getAlsoKnownAs()) {
             akaTv.append(aka + "\n");
         }
@@ -90,12 +120,12 @@ public class DetailActivity extends AppCompatActivity {
         }
 
 
-        TextView ingrTv = findViewById(R.id.ingredients_tv);
+    //    TextView ingrTv = findViewById(R.id.ingredients_tv);
         for (String ingr : sandwich.getIngredients()) {
             ingrTv.append(ingr + "\n");
         }
 
-        TextView descrTv = findViewById(R.id.description_tv);
+    //    TextView descrTv = findViewById(R.id.description_tv);
         descrTv.setText(sandwich.getDescription());
 
     }
